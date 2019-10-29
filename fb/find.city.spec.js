@@ -6,7 +6,7 @@ describe("find city", () => {
 
 	beforeEach(async () => {
 		browser = await puppeteer.launch({
-			args: ["--lang=en"]
+			args: ["--lang=en", "--no-sandbox", "--disable-setuid-sandbox"]
 		});
 	});
 
