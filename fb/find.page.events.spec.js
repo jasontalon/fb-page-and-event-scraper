@@ -1,13 +1,12 @@
-const puppeteer = require("puppeteer"),
-	findPageEvents = require("./find.page.events");
+require("dotenv").config();
+
+const findPageEvents = require("./find.page.events");
 
 describe("find page events", () => {
 	it.each([["BikeDemoPH", true], ["BeerfestAus", true]])(
 		"should find events from page",
 		async (pageId, shouldExpect) => {
-			const browser = await puppeteer.launch({
-				args: ["--lang=en", "--no-sandbox", "--disable-setuid-sandbox"]
-			});
+			browser = await require("../puppeteer.launcher")();
 
 			const page = await browser.newPage();
 

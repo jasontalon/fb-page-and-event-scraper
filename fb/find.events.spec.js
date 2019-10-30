@@ -1,13 +1,12 @@
-const puppeteer = require("puppeteer"),
-	findEvents = require("./find.events");
+require("dotenv").config();
+
+const findEvents = require("./find.events");
 
 describe("find events", () => {
 	let browser;
 
 	beforeEach(async () => {
-		browser = await puppeteer.launch({
-			args: ["--lang=en", "--no-sandbox", "--disable-setuid-sandbox"]
-		});
+		browser = await require("../puppeteer.launcher")();
 	});
 
 	afterEach(async () => {

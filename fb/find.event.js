@@ -13,14 +13,6 @@ function splitByNewLine(value) {
 		.filter(i => i);
 }
 
-function scrapeTicket() {
-	return (
-		document.querySelector("a[data-testid=event_ticket_link]") || {
-			innerText: ""
-		}
-	).innerText;
-}
-
 function scrapeLocation() {
 	return Array.from(document.querySelectorAll("dd")).pop().parentNode
 		.innerText;

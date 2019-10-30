@@ -1,13 +1,11 @@
-const findCity = require("./find.city"),
-	puppeteer = require("puppeteer");
+require("dotenv").config();
+const findCity = require("./find.city");
 
 describe("find city", () => {
 	let browser;
 
 	beforeEach(async () => {
-		browser = await puppeteer.launch({
-			args: ["--lang=en", "--no-sandbox", "--disable-setuid-sandbox"]
-		});
+		browser = await require("../puppeteer.launcher")();
 	});
 
 	afterEach(async () => {

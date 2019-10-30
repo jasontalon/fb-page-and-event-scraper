@@ -1,16 +1,7 @@
-const puppeteer = require("puppeteer"),
-	fb = require("../fb"),
+const fb = require("../fb"),
 	util = require("util"),
-	eventCategoryList = require("../fb/event.categories.json");
-
-const launchBrowser = async (proxy = null) => {
-	let args = ["--lang=en", "--no-sandbox", "--disable-setuid-sandbox"];
-	if (proxy) args.push(`--proxy-server=${proxy}`);
-	return await puppeteer.launch({
-		defaultViewport: null,
-		args
-	});
-};
+	eventCategoryList = require("../fb/event.categories.json"),
+	launchBrowser = require("../puppeteer.launcher");
 
 const eventCategories = (req, res) => res.jsonp(eventCategoryList);
 

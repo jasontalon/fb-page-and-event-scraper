@@ -15,10 +15,11 @@ async function findEvents(page, city, categories, startDate, endDate) {
 			endDate
 		),
 		url = facebookDiscoverEventsUrl + searchQueryString;
-	page.on("console", console.log);
+	page.on("console", _console => console.log(_console._text));
 
 	await page.goto(url, {
-		waitUntil: "networkidle2"
+		waitUntil: "networkidle2",
+		timeout: 0
 	});
 
 	await page.evaluate(autoScroll, eventLimit);
@@ -76,7 +77,6 @@ async function scrapeEvents() {
 			date: p.previousSibling.firstChild.title
 		}));
 
-	console.log(JSON.stringify(items));
 	return items;
 }
 async function autoScroll(limit) {

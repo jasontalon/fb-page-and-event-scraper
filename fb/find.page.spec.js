@@ -1,14 +1,13 @@
-const puppeteer = require("puppeteer"),
-	findPage = require("./find.page");
+require("dotenv").config();
+
+const findPage = require("./find.page");
 
 describe("find page", () => {
 	it.each([["ValenzuelaCityGov", true], ["laoisdN1010", false]])(
 		"should find page",
 		async (pageId, shouldExpect) => {
-			const browser = await puppeteer.launch({
-				defaultViewport: null,
-				args: ["--lang=en", "--no-sandbox", "--disable-setuid-sandbox"]
-			});
+			browser = await require("../puppeteer.launcher")();
+
 			const page = await browser.newPage();
 			const pageDetails = await findPage(page, pageId);
 

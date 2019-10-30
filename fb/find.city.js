@@ -1,3 +1,4 @@
+const util = require("util");
 module.exports = async (page, city) => {
 	await page.goto("https://m.facebook.com/places/", {
 		waitUntil: "networkidle2"
@@ -7,9 +8,12 @@ module.exports = async (page, city) => {
 		"input[name='city_query']",
 		{ timeout: 3000 }
 	);
-
+	await page.evaluate(
+		city => (document.querySelector("input[name=city_query]").value = city),
+		city
+	);
 	await txtBoxElement.tap();
-	await txtBoxElement.type(city);
+	await page.keyboard.press("Space");
 
 	let cityResult;
 	try {
@@ -17,6 +21,7 @@ module.exports = async (page, city) => {
 			"div[class='jx-result']",
 			{ timeout: 3000 }
 		);
+
 		cityResult = await resultElement.evaluate(node => {
 			var id = node.getAttribute("rel");
 			if (id)
@@ -28,6 +33,7 @@ module.exports = async (page, city) => {
 		});
 	} catch (err) {
 		/*timeout. no results returned after 3000ms*/
+		console.log(util.inspect(err));
 	} finally {
 		return cityResult;
 	}

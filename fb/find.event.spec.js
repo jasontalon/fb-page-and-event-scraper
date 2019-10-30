@@ -1,5 +1,5 @@
-const puppeteer = require("puppeteer"),
-	util = require("util"),
+require("dotenv").config();
+const util = require("util"),
 	findEvent = require("./find.event");
 
 describe("find event", () => {
@@ -14,10 +14,7 @@ describe("find event", () => {
 	it.each(events)(
 		"should find event",
 		async (id, shouldExect) => {
-			const browser = await puppeteer.launch({
-				defaultViewport: null,
-				args: ["--lang=en", "--no-sandbox", "--disable-setuid-sandbox"]
-			});
+			const browser = await require("../puppeteer.launcher")();
 
 			const page = await browser.newPage();
 
@@ -34,10 +31,16 @@ describe("find event", () => {
 	it.each([["500890194059089,440608969898681,X1234,1361286364025406", true]])(
 		"should do batch event find",
 		async (eventIds, shouldExpect) => {
-			const browser = await puppeteer.launch({
-				defaultViewport: null,
-				args: ["--lang=en", "--no-sandbox", "--disable-setuid-sandbox"]
-			});
+			const args = [
+				"--lang=en",
+				"--no-sandbox",
+				"--disable-setuid-sandbox"
+			];
+			/*browser = await puppeteer.launch({
+			args
+		});*/
+
+			const browser = await require("../puppeteer.launcher")();
 
 			const eventIdArray = eventIds.split(",");
 			const tasks = [];
