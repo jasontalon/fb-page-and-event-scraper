@@ -3,7 +3,7 @@ require("dotenv").config();
 const express = require("express"),
 	app = express(),
 	port = process.env.PORT || 3000,
-	fbRoutes = require("./routes/fb.routes");
+	fbRoutes = require("./routes/fb");
 
 app.use(express.json());
 app.set("json spaces", 2);
