@@ -147,6 +147,20 @@ const findPageEvents = async (req, res) => {
 		await browser.close();
 	}
 };
+
+const findCity = async (req, res) => {
+	const { proxy, keyword : city } = req.query,
+		browser = await launchBrowser(proxy);
+
+	try {
+		const result = await fb.findCity(await browser.newPage(), city);
+		res.jsonp(result);
+	} catch (error) {
+		res.status(500).send({ error: util.inspect(error) });
+	} finally {
+		await browser.close();
+	}
+};
 module.exports = {
 	get: [
 		["/tickets/:id", findTicket],
@@ -155,6 +169,7 @@ module.exports = {
 		["/events/find", findEvents],
 		["/events/:id", findEvent],
 		["/pages/:id/events", findPageEvents],
-		["/pages/:id", findPage]
+		["/pages/:id", findPage],
+		["/cities/find", findCity]
 	]
 };
